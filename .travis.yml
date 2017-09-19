@@ -15,7 +15,7 @@ script:
    - ./gradlew build connectedCheck
 
 before_install:
-  - sh scripts/emulator.sh
+  - sh ci/emulator.sh
 
 after_script:
   - adb logcat -d
