@@ -10,11 +10,14 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme"
+      android:name=".GymLogApp"
       >
-    <activity android:name=".screens.home.HomeActivity">
+
+    <activity android:name=".ui.screen.main.MainActivity"
+      android:screenOrientation="portrait">
       <intent-filter>
-        <category android:name="android.intent.category.LAUNCHER"/>
-        <action android:name="android.intent.action.MAIN" />
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
   </application>
