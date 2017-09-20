@@ -2,6 +2,10 @@ sudo: false
 language: android
 jdk: oraclejdk8
 
+licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
 android:
   components:
     - tools # to get the new `repository-11.xml`
