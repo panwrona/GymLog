@@ -46,7 +46,7 @@ cache:
   - $HOME/.gradle/wrapper/
 
 before_script:
-  - android list targets
+  - android list target
   # Create and start emulator for the script. Meant to race the install task.
   - echo no | android create avd --force --name test --target "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI    #Create AVD for given api
   - $ANDROID_HOME/emulator/emulator -avd test -no-skin -no-audio -no-window &
