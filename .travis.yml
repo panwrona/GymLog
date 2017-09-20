@@ -37,8 +37,16 @@ before_install:
   # Install the rest of tools (e.g., avdmanager)
   - sdkmanager tools
   # Create and start emulator for the script. Meant to race the install task.
-  - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI
-  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+  - echo no | android create avd --force -n test "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI
+  - $ANDROID_HOME/emulator/emulator -avd test -no-skin -no-audio -no-window &
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
 
 before_script:
   - android-wait-for-emulator
