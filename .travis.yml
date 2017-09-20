@@ -36,9 +36,6 @@ before_install:
   - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   # Install the rest of tools (e.g., avdmanager)
   - sdkmanager tools
-  # Create and start emulator for the script. Meant to race the install task.
-  - echo no | android create avd --force -n test "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI
-  - $ANDROID_HOME/emulator/emulator -avd test -no-skin -no-audio -no-window &
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -49,6 +46,10 @@ cache:
   - $HOME/.gradle/wrapper/
 
 before_script:
+  - android list targets
+  # Create and start emulator for the script. Meant to race the install task.
+  - echo no | android create avd --force --name test --target "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI    #Create AVD for given api
+  - $ANDROID_HOME/emulator/emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82
 
