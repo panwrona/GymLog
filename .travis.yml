@@ -10,7 +10,6 @@ android:
     - build-tools-25.0.0
     - extra-android-m2repository
     - android-25
-    - sys-img-armeabi-v7a-android-25
 
 licenses:
     - 'android-sdk-preview-license-52d11cd2'
@@ -21,7 +20,20 @@ script:
    - ./gradlew build connectedCheck
 
 before_install:
-  - sh ci/emulator.sh
+  # Install SDK license so Android Gradle plugin can install deps.
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  # Install the rest of tools (e.g., avdmanager)
+  - sdkmanager tools
+  # Install the system image
+  - sdkmanager "system-images;android-25;default;armeabi-v7a"
+  # Create and start emulator for the script. Meant to race the install task.
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-25;default;armeabi-v7a"
+  - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+
+before_script:
+  - android-wait-for-emulator
+  - adb shell input keyevent 82
 
 after_script:
   - adb logcat -d
