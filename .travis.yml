@@ -1,0 +1,60 @@
+sudo: false
+language: android
+jdk: oraclejdk8
+
+env:
+  global:
+    - ANDROID_API_LEVEL=25
+    - EMULATOR_API_LEVEL=21
+    - ANDROID_BUILD_TOOLS_VERSION=25.0.3
+    - ANDROID_ABI=armeabi-v7a
+    - ADB_INSTALL_TIMEOUT=20 # minutes (2 minutes by default)
+
+android:
+  components:
+    - tools # to get the new `repository-11.xml`
+    - platform-tools
+    - tools # to install Android SDK tools 25.1.x
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - android-$ANDROID_API_LEVEL
+    - android-$EMULATOR_API_LEVEL
+    - extra-android-support
+    - sys-img-armeabi-v7a-google_apis-$ANDROID_API_LEVEL
+    - sys-img-armeabi-v7a-google_apis-$EMULATOR_API_LEVEL
+
+licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
+script:
+   - ./gradlew build connectedCheck
+
+before_install:
+  # Install SDK license so Android Gradle plugin can install deps.
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  # Install the rest of tools (e.g., avdmanager)
+  - sdkmanager tools
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+
+before_script:
+  - android list target
+  # Create and start emulator for the script. Meant to race the install task.
+  - echo no | android create avd --force --name test -k 'system-images;android-21;google_apis;armeabi-v7a' --abi $ANDROID_ABI    #Create AVD for given api
+  - $ANDROID_HOME/emulator/emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82
+
+after_script:
+  - adb logcat -d
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
