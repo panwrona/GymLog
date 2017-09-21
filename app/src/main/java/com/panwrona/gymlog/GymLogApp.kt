@@ -21,7 +21,7 @@ class GymLogApp : Application() {
 
     private fun initCalligraphy() {
         CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Montserrat-Regular.ttf")
+                .setDefaultFontPath("font/montserrat_regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build())
     }
