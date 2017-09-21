@@ -4,12 +4,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.3"
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
   defaultConfig {
     applicationId "com.panwrona.gymlog"
     minSdkVersion 21
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -23,7 +23,7 @@ android {
 }
 
 ext {
-  android_support_version = '25.3.1'
+  android_support_version = '26.+'
   dagger_version = '2.11'
 }
 
@@ -55,9 +55,6 @@ dependencies {
   //Dependency Injection
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
   compile "com.google.dagger:dagger:$dagger_version"
-
-  //Calligraphy
-  compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 
   //Tests
   testCompile 'junit:junit:4.12'

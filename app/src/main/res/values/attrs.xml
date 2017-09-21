@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MontserratTextView">
+        <attr name="fontType">
+            <enum name="thin" value="0"/>
+            <enum name="light" value="1" />
+            <enum name="normal" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="semiBold" value="4" />
+            <enum name="bold" value="5"/>
+            <enum name="italic" value="6"/>
+        </attr>
+    </declare-styleable>
+</resources>
