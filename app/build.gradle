@@ -56,9 +56,6 @@ dependencies {
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
   compile "com.google.dagger:dagger:$dagger_version"
 
-  //Calligraphy
-  compile 'uk.co.chrisjenx:calligraphy:2.3.0'
-
   //Tests
   testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:1.10.19'
