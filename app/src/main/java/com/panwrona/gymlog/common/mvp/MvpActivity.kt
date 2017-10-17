@@ -30,4 +30,9 @@ abstract class MvpActivity<V : MvpView, P : MvpPresenter<V>> : AppCompatActivity
         presenter.detachView()
         super.onStop()
     }
+
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
+    }
 }
