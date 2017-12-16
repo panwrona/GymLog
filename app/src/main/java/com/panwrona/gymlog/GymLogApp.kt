@@ -22,5 +22,4 @@ class GymLogApp : Application() {
                 .appModule(AppModule(this))
                 .build()
     }
-
 }
